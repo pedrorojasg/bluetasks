@@ -21,10 +21,11 @@ class Common(Configuration):
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
-        'auditlog',
+        # 'auditlog',
 
         # Your apps
         'bluetasks.users',
+        'bluetasks.tasks',
 
     )
 
@@ -37,12 +38,12 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'auditlog.middleware.AuditlogMiddleware'
+        # 'auditlog.middleware.AuditlogMiddleware'
     )
 
     ALLOWED_HOSTS = ["*"]
     ROOT_URLCONF = 'bluetasks.urls'
-    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'test')
     WSGI_APPLICATION = 'bluetasks.wsgi.application'
 
     # Email
@@ -52,10 +53,11 @@ class Common(Configuration):
         ('Author', 'pedrorojas89@gmail.com'),
     )
 
+    # postgres://USER:PASSWORD@HOST:PORT/NAME
     # Postgres
     DATABASES = {
         'default': dj_database_url.config(
-            default='postgres://postgres:@postgres:5432/postgres',
+            default='postgres://cirbox_manager:c1rb0xl1fe@localhost:5433/blue',
             conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
         )
     }
